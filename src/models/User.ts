@@ -13,7 +13,7 @@ export interface IItem {
   options: IOption[];
 }
 
-interface IItemOption {
+export interface IItemOption {
   title: string;
   dataType: string;
 }

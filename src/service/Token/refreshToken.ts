@@ -1,10 +1,10 @@
-import { ApiError } from "../../exceptions/apiError";
+import { ApiError } from "./../../exceptions/apiError";
 import { FindTokensService } from "./findToken";
 import { GenerateTokensService } from "./generateTokens";
 import { SaveTokenService } from "./saveToken";
 import { ValidateRefreshTokenService } from "./validateRefreshToken";
-import { UserDto } from "../../dtos/dtos";
-import { User } from "../../models/user";
+import { UserDto } from "./../../dtos/dtos";
+import { User } from "./../../models/user";
 import { Token } from "./../../models/token";
 
 export const RefreshTokenService = async (refreshToken: string) => {

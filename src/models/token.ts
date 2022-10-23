@@ -1,7 +1,6 @@
 import { Schema, model } from "mongoose";
 
 import { IUser } from "./user";
-
 interface IToken {
   user: IUser;
   refreshToken: string;

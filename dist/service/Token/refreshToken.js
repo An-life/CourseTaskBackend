@@ -48,13 +48,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RefreshTokenService = void 0;
-var apiError_1 = require("../../exceptions/apiError");
+var apiError_1 = require("./../../exceptions/apiError");
 var findToken_1 = require("./findToken");
 var generateTokens_1 = require("./generateTokens");
 var saveToken_1 = require("./saveToken");
 var validateRefreshToken_1 = require("./validateRefreshToken");
-var dtos_1 = require("../../dtos/dtos");
-var user_1 = require("../../models/user");
+var dtos_1 = require("./../../dtos/dtos");
+var user_1 = require("./../../models/user");
 var token_1 = require("./../../models/token");
 var RefreshTokenService = function (refreshToken) { return __awaiter(void 0, void 0, void 0, function () {
     var userData, tokenFromDb, userTokenData, userDataFromDb, userDto, tokens;
