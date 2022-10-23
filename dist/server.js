@@ -71,7 +71,7 @@ var authRouter_1 = require("./router/authRouter");
 var errorMiddleware_1 = require("./middlewares/errorMiddleware");
 dotenv.config();
 var app = (0, express_1.default)();
-var PORT = process.env.PORT;
+var PORT = 5000;
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)());
@@ -83,7 +83,7 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, mongoose_1.default.connect(process.env.DB_URL)];
+                return [4 /*yield*/, mongoose_1.default.connect("mongodb+srv://anlife:1325aisaka@cluster0.u115thz.mongodb.net/?retryWrites=true&w=majority")];
             case 1:
                 _a.sent();
                 app.listen(PORT, function () { return console.log("Server started on port ".concat(PORT)); });

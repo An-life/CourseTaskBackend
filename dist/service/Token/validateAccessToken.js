@@ -7,7 +7,7 @@ exports.ValidateAccessTokenService = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var ValidateAccessTokenService = function (token) {
     try {
-        var userData = jsonwebtoken_1.default.verify(token, process.env.JWT_ACCESS_SECRET);
+        var userData = jsonwebtoken_1.default.verify(token, "secret");
         return userData;
     }
     catch (e) {

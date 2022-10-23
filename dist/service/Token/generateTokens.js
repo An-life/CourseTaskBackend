@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GenerateTokensService = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var GenerateTokensService = function (payload) {
-    var accessToken = jsonwebtoken_1.default.sign(payload, process.env.JWT_ACCESS_SECRET, {
+    var accessToken = jsonwebtoken_1.default.sign(payload, "secret", {
         expiresIn: "30 min",
     });
-    var refreshToken = jsonwebtoken_1.default.sign(payload, process.env.JWT_REFRESH_SECRET, {
+    var refreshToken = jsonwebtoken_1.default.sign(payload, "secret", {
         expiresIn: "30 d",
     });
     return {

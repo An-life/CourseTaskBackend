@@ -7,7 +7,7 @@ exports.ValidateRefreshTokenService = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var ValidateRefreshTokenService = function (token) {
     try {
-        var userData = jsonwebtoken_1.default.verify(token, process.env.JWT_REFRESH_SECRET);
+        var userData = jsonwebtoken_1.default.verify(token, "secret");
         return userData;
     }
     catch (e) {

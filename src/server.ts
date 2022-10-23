@@ -9,7 +9,7 @@ import { ErrorMiddleware } from "./middlewares/errorMiddleware";
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT;
+const PORT = 5000;
 
 app.use(express.json());
 app.use(cookieParser());
@@ -19,7 +19,9 @@ app.use(ErrorMiddleware);
 
 const start = async () => {
   try {
-    await mongoose.connect(process.env.DB_URL);
+    await mongoose.connect(
+      "mongodb+srv://anlife:1325aisaka@cluster0.u115thz.mongodb.net/?retryWrites=true&w=majority"
+    );
     app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
   } catch (e) {
     console.log(e);
