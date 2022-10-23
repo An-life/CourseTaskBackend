@@ -1,4 +1,4 @@
-import { User } from "./../../models/user";
+import { User } from "../../models/user1";
 
 export const GetAllUsersService = async () => {
   const users = await User.find();
