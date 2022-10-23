@@ -1,13 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserModel = exports.User = void 0;
+exports.User = exports.UserSchema = void 0;
 var mongoose_1 = require("mongoose");
-exports.User = new mongoose_1.Schema({
-    username: { type: String, require: true },
+exports.UserSchema = new mongoose_1.Schema({
+    name: { type: String, unique: true },
     email: { type: String, unique: true, require: true },
     password: { type: String, require: true },
-    status: [{ type: String, ref: "Status" }],
-    roles: [{ type: String, ref: "Role" }],
+    status: { type: String, default: "active" },
+    role: { type: String, default: "user" },
+    activationLink: { type: String },
+    collections: [
+        {
+            collectionId: { type: String },
+            title: { type: String },
+            description: { type: String },
+            image: { type: String },
+            items: [
+                {
+                    itemId: { type: String },
+                    title: { type: String },
+                    description: { type: String },
+                    options: [{ title: String, value: String || Number || Boolean }],
+                    likes: [{ value: { type: String } }],
+                    tags: [{ type: String, ref: "Tag" }],
+                },
+            ],
+            itemOptions: [{ title: String, dataType: String }],
+            topic: [{ type: String, ref: "Topic" }],
+        },
+    ],
 });
-exports.UserModel = (0, mongoose_1.model)("User", exports.User);
-//# sourceMappingURL=User.js.map
+exports.User = (0, mongoose_1.model)("User", exports.UserSchema);
+//# sourceMappingURL=user.js.map

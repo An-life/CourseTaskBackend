@@ -1,26 +1,14 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -62,39 +50,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var cors_1 = __importDefault(require("cors"));
-var cookie_parser_1 = __importDefault(require("cookie-parser"));
-var express_1 = __importDefault(require("express"));
-var mongoose_1 = __importDefault(require("mongoose"));
-var dotenv = __importStar(require("dotenv"));
-var authRouter_1 = require("./router/authRouter");
-var errorMiddleware_1 = require("./middlewares/errorMiddleware");
-dotenv.config();
-var app = (0, express_1.default)();
-var PORT = process.env.PORT;
-app.use(express_1.default.json());
-app.use((0, cookie_parser_1.default)());
-app.use((0, cors_1.default)());
-app.use("/api", authRouter_1.authRouter);
-app.use(errorMiddleware_1.ErrorMiddleware);
-var start = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var e_1;
+exports.RegistrationService = void 0;
+var bcryptjs_1 = __importDefault(require("bcryptjs"));
+var apiError_1 = require("../../exceptions/apiError");
+var generateTokens_1 = require("../Token/generateTokens");
+var saveToken_1 = require("../Token/saveToken");
+var user_1 = require("../../models/user");
+var dtos_1 = require("../../dtos/dtos");
+var RegistrationService = function (name, email, enteredPassword) { return __awaiter(void 0, void 0, void 0, function () {
+    var candidate, password, user, userDto, tokens;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, mongoose_1.default.connect(process.env.DB_URL)];
+            case 0: return [4 /*yield*/, user_1.User.findOne({ email: email })];
             case 1:
-                _a.sent();
-                app.listen(PORT, function () { return console.log("Server started on port ".concat(PORT)); });
-                return [3 /*break*/, 3];
+                candidate = _a.sent();
+                if (candidate) {
+                    throw apiError_1.ApiError.BadRequest("User with such address ".concat(email, " already exist"));
+                }
+                return [4 /*yield*/, bcryptjs_1.default.hash(enteredPassword, 3)];
             case 2:
-                e_1 = _a.sent();
-                console.log(e_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                password = _a.sent();
+                return [4 /*yield*/, user_1.User.create({ name: name, email: email, password: password })];
+            case 3:
+                user = _a.sent();
+                userDto = new dtos_1.UserDto(user);
+                tokens = (0, generateTokens_1.GenerateTokensService)(__assign(__assign({}, userDto), { status: "active", role: "user" }));
+                return [4 /*yield*/, (0, saveToken_1.SaveTokenService)(userDto.id, tokens.refreshToken)];
+            case 4:
+                _a.sent();
+                return [2 /*return*/, __assign(__assign({}, tokens), { user: userDto })];
         }
     });
 }); };
-start();
-//# sourceMappingURL=server.js.map
+exports.RegistrationService = RegistrationService;
+//# sourceMappingURL=registration.js.map

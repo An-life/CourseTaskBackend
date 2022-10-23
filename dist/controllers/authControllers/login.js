@@ -1,27 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -58,43 +35,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var cors_1 = __importDefault(require("cors"));
-var cookie_parser_1 = __importDefault(require("cookie-parser"));
-var express_1 = __importDefault(require("express"));
-var mongoose_1 = __importDefault(require("mongoose"));
-var dotenv = __importStar(require("dotenv"));
-var authRouter_1 = require("./router/authRouter");
-var errorMiddleware_1 = require("./middlewares/errorMiddleware");
-dotenv.config();
-var app = (0, express_1.default)();
-var PORT = process.env.PORT;
-app.use(express_1.default.json());
-app.use((0, cookie_parser_1.default)());
-app.use((0, cors_1.default)());
-app.use("/api", authRouter_1.authRouter);
-app.use(errorMiddleware_1.ErrorMiddleware);
-var start = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var e_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+exports.Login = void 0;
+var login_1 = require("../../service/Auth/login");
+var Login = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, email, password, userData, e_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, mongoose_1.default.connect(process.env.DB_URL)];
+                _b.trys.push([0, 2, , 3]);
+                _a = req.body, email = _a.email, password = _a.password;
+                return [4 /*yield*/, (0, login_1.LoginService)(email, password)];
             case 1:
-                _a.sent();
-                app.listen(PORT, function () { return console.log("Server started on port ".concat(PORT)); });
-                return [3 /*break*/, 3];
+                userData = _b.sent();
+                res.cookie("refreshToken", userData.refreshToken, {
+                    maxAge: 30 * 24 * 60 * 60 * 1000,
+                    httpOnly: true,
+                });
+                return [2 /*return*/, res.json(userData)];
             case 2:
-                e_1 = _a.sent();
-                console.log(e_1);
+                e_1 = _b.sent();
+                next(e_1);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
-start();
-//# sourceMappingURL=server.js.map
+exports.Login = Login;
+//# sourceMappingURL=login.js.map
