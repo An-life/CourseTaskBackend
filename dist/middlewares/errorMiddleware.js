@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ErrorMiddleware = void 0;
-var apiError_1 = require("./../exceptions/apiError");
 var ErrorMiddleware = function (err, req, res, next) {
     console.log(err);
-    if (err instanceof apiError_1.ApiError) {
+    if (err) {
         return res
             .status(err.status)
             .json({ message: err.message, errors: err.errors });
