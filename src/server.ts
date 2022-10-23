@@ -15,6 +15,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 app.use("/api", authRouter);
+app.get("/", (req, res) => res.json("hi"));
+
 app.use(ErrorMiddleware);
 
 const start = async () => {
