@@ -1,20 +1,29 @@
+import cors from "cors";
+import cookieParser from "cookie-parser";
 import express from "express";
 import mongoose from "mongoose";
-import { authRouter } from "./authRouter";
+import * as dotenv from "dotenv";
 
-const PORT = process.env.PORT || 5000;
+import { authRouter } from "./router/authRouter";
+import { ErrorMiddleware } from "./middlewares/errorMiddleware";
+
+dotenv.config();
 const app = express();
+const PORT = process.env.PORT;
+
 app.use(express.json());
-app.use("/auth", authRouter);
+app.use(cookieParser());
+app.use(cors());
+app.use("/api", authRouter);
+app.use(ErrorMiddleware);
 
 const start = async () => {
   try {
-    await mongoose.connect(
-      `mongodb+srv://anlife:1325aisaka@cluster0.u115thz.mongodb.net/?retryWrites=true&w=majority`
-    );
-    app.listen(PORT, () => console.log(`server started on port ${PORT}`));
+    await mongoose.connect(process.env.DB_URL);
+    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
   } catch (e) {
     console.log(e);
   }
 };
+
 start();
