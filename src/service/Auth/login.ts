@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { ApiError } from "../../exceptions/apiError";
 import { GenerateTokensService } from "../Token/generateTokens";
 import { SaveTokenService } from "../Token/saveToken";
-import { User } from "../../models/user1";
+import { User } from "../../models/user";
 import { UserDto } from "../../dtos/dtos";
 
 export const LoginService = async (email: string, password: string) => {

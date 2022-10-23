@@ -4,7 +4,7 @@ import { GenerateTokensService } from "./generateTokens";
 import { SaveTokenService } from "./saveToken";
 import { ValidateRefreshTokenService } from "./validateRefreshToken";
 import { UserDto } from "./../../dtos/dtos";
-import { User } from "../../models/user1";
+import { User } from "../../models/user";
 import { Token } from "./../../models/token";
 
 export const RefreshTokenService = async (refreshToken: string) => {
