@@ -7,7 +7,7 @@ exports.GenerateTokensService = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var GenerateTokensService = function (payload) {
     var accessToken = jsonwebtoken_1.default.sign(payload, "secret", {
-        expiresIn: "30 min",
+        expiresIn: "60 min",
     });
     var refreshToken = jsonwebtoken_1.default.sign(payload, "secret", {
         expiresIn: "30 d",

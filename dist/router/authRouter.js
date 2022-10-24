@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authRouter = void 0;
 var express_1 = __importDefault(require("express"));
 var express_validator_1 = require("express-validator");
+var getMe_1 = require("./../controllers/authControllers/getMe");
 var getUsers_1 = require("../controllers/authControllers/getUsers");
 var login_1 = require("../controllers/authControllers/login");
 var logout_1 = require("../controllers/authControllers/logout");
@@ -17,4 +18,5 @@ exports.authRouter.post("/login", login_1.Login);
 exports.authRouter.post("/logout", logout_1.Logout);
 exports.authRouter.get("/refresh", refresh_1.Refresh);
 exports.authRouter.get("/users", getUsers_1.GetUsers);
+exports.authRouter.get("/me", getMe_1.GetMe);
 //# sourceMappingURL=authRouter.js.map

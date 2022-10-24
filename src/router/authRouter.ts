@@ -1,6 +1,7 @@
 import express from "express";
 import { body } from "express-validator";
 
+import { GetMe } from "./../controllers/authControllers/getMe";
 import { GetUsers } from "../controllers/authControllers/getUsers";
 import { Login } from "../controllers/authControllers/login";
 import { Logout } from "../controllers/authControllers/logout";
@@ -20,3 +21,4 @@ authRouter.post("/login", Login);
 authRouter.post("/logout", Logout);
 authRouter.get("/refresh", Refresh);
 authRouter.get("/users", GetUsers);
+authRouter.get("/me", GetMe);
