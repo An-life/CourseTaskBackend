@@ -17,6 +17,7 @@ export const RefreshTokenService = async (refreshToken: string) => {
   if (!userData || !tokenFromDb) {
     throw ApiError.UnauthorizedError();
   }
+
   const userTokenData = await Token.findOne({ refreshToken });
 
   const userDataFromDb = await User.findById(userTokenData.user);
