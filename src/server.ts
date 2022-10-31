@@ -4,7 +4,7 @@ import express from "express";
 import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 
-import { authRouter } from "./router/authRouter";
+import { projectRouter } from "./router/projectRouter";
 import { ErrorMiddleware } from "./middlewares/errorMiddleware";
 
 dotenv.config();
@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
-app.use("/api", authRouter);
+app.use("/api", projectRouter);
 app.get("/", (req, res) => res.json("hi"));
 app.use(ErrorMiddleware);
 
